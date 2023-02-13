@@ -9,12 +9,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@typescript-eslint/parser": "^5.51.0",
     "morse-converter": "^1.2.0",
-    "vue": "^3.2.45"
+    "prettier": "^2.8.4",
+    "vue": "^3.2.45",
+    "vue-eslint-parser": "^9.1.0"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
-    "typescript": "^4.9.3",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-vue": "^9.9.0",
+    "typescript": "*",
     "vite": "^4.1.0",
     "vue-tsc": "^1.0.24"
   }
