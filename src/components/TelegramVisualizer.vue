@@ -34,10 +34,10 @@
       v-for="(point, i) in time_sequence"
       v-bind:key="i"
       v-bind:x1="
-        point * space_rate - (deltaTime * time_rate * space_rate) / 1000
+        x + point * space_rate - (deltaTime * time_rate * space_rate) / 1000
       "
       v-bind:x2="
-        point * space_rate - (deltaTime * time_rate * space_rate) / 1000
+        x + point * space_rate - (deltaTime * time_rate * space_rate) / 1000
       "
       y1="0"
       y2="200"
@@ -46,8 +46,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { encode } from 'morse-converter'
+import { defineComponent } from "vue";
+import { encode } from "morse-converter";
 
 // a-z
 const alphabetTable: Array<Array<0 | 1>> = [
@@ -76,98 +76,98 @@ const alphabetTable: Array<Array<0 | 1>> = [
   [0, 1, 1],
   [1, 0, 0, 1],
   [1, 0, 1, 1],
-  [1, 1, 0, 0]
-]
+  [1, 1, 0, 0],
+];
 
-const useMyOwnCode = false
+const useMyOwnCode = false;
 
 export default defineComponent({
   methods: {
-    timeupdate () {
-      this.time = Date.now()
+    timeupdate() {
+      this.time = Date.now();
     },
-    loadTimer () {
-      this.mounted_time = Date.now() - this.deltaTime
-      this.timer = setInterval(this.timeupdate)
+    loadTimer() {
+      this.mounted_time = Date.now() - this.deltaTime;
+      this.timer = setInterval(this.timeupdate);
     },
-    UnloadTimer () {
+    UnloadTimer() {
       if (this.timer) {
-        clearInterval(this.timer)
-        this.timer = 0
+        clearInterval(this.timer);
+        this.timer = 0;
       }
-    }
+    },
   },
   data: () => {
     return {
-      input_x: '0',
-      input_data: 'Test text',
+      input_x: "0",
+      input_data: "Test text",
       timer: 0,
       mounted_time: 0,
       time: 0,
       space_rate: 100,
-      time_rate: 2
-    }
+      time_rate: 2,
+    };
   },
-  unmounted () {
-    this.UnloadTimer()
+  unmounted() {
+    this.UnloadTimer();
   },
   computed: {
     deltaTime: function (): number {
-      return this.time - this.mounted_time
+      return this.time - this.mounted_time;
     },
     x: function (): number {
-      return parseFloat(this.input_x) || 0
+      return parseFloat(this.input_x) || 0;
     },
     style: function (): string {
-      return 'x:' + this.x + ';'
+      return "x:" + this.x + ";";
     },
     table: function (): { [_: string]: string } {
-      const res: { [_: string]: string } = {}
+      const res: { [_: string]: string } = {};
       alphabetTable.forEach((char: (0 | 1)[], index: number): void => {
-        const key = String.fromCharCode(index + 'a'.charCodeAt(0))
+        const key = String.fromCharCode(index + "a".charCodeAt(0));
 
         const value = char.reduce((pre: string, cur: number): string => {
-          return pre + (cur ? '-' : '.')
-        }, '')
-        res[key] = value
-      })
-      return res
+          return pre + (cur ? "-" : ".");
+        }, "");
+        res[key] = value;
+      });
+      return res;
     },
     decoded_sequence: function (): string {
       if (useMyOwnCode) {
-        let res = ''
+        let res = "";
         for (const c of this.input_data) {
-          if (c === ' ') {
-            res += '      '
+          if (c === " ") {
+            res += "      ";
           } else {
-            res += this.table[c.toLowerCase()]
-            res += ' '
+            res += this.table[c.toLowerCase()];
+            res += " ";
           }
         }
-        return res
+        return res;
       } else {
         try {
-          return encode(this.input_data)
+          return encode(this.input_data);
         } catch (e) {
-          console.error(e)
-          return '?'
+          console.error(e);
+          return "?";
         }
       }
     },
     time_sequence: function (): number[] {
-      let current = 0
-      const res: number[] = []
+      let current = 0;
+      const res: number[] = [];
       for (const c of this.decoded_sequence) {
-        res.push(current)
+        res.push(current);
         switch (c) {
-          case '/':
-          case '-':
-            current += 3
-            break
-          case ' ':
-          case '.':
-            current += 1
-            break
+          case "/":
+          case "-":
+            current += 3;
+            break;
+          case " ":
+          case ".":
+            current += 1;
+            break;
           default:
             console.error(
               c +
@@ -176,45 +176,51 @@ export default defineComponent({
                 '", which is parsed from "' +
                 this.input_data +
                 '"'
-            )
-            break
+            );
+            break;
         }
       }
-      return res
-    }
-  }
-})
+      return res;
+    },
+  },
+});
 </script>
 
 <style scoped>
 * {
   font-size: 2vw;
 }
+
 .code {
   width: 8em;
   text-align: left;
   display: inline-block;
 }
+
 label {
   width: 20vw;
   text-align: left;
   display: inline-block;
 }
+
 input {
   width: 40vw;
 }
+
 svg {
   width: 100%;
   height: 200;
   border: 5px black;
   background-color: grey;
 }
+
 line.now {
   stroke: red;
-  stroke-width: 8;
+  stroke-width: 10;
 }
+
 line.point {
   stroke: black;
-  stroke-width: 2;
+  stroke-width: 4;
 }
 </style>
