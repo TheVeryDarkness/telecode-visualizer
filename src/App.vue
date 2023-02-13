@@ -1,18 +1,16 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <TelegramVisualizer />
+  <HelloWorld v-if="false" msg="Welcome to Your Vue.js + TypeScript App" />
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { defineComponent } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
+import TelegramVisualizer from './components/TelegramVisualizer.vue'
 
-@Options({
-  components: {
-    HelloWorld
-  }
+export default defineComponent({
+  components: { HelloWorld, TelegramVisualizer }
 })
-export default class App extends Vue {}
 </script>
 
 <style>
